@@ -1,5 +1,6 @@
 package com.yash.scoreTracker.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,5 +30,9 @@ class HomeViewModel : ViewModel() {
      fun resetScores(){
         _scoretwo.value = "0"
         _scoreone.value = "0"
+         Log.d("HOMEVIEWMODEL",scoreone.value+scoretwo.value)
+    }
+    fun getId(){
+
     }
 }
