@@ -38,12 +38,16 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel = vm2
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         _binding?.apply {
             lifecycleOwner = this@HomeFragment.viewLifecycleOwner
             hViewModel = homeViewModel
-            vm = vm2
+            homeViewModel.message.observe(viewLifecycleOwner, Observer {
+                it.getContentIfNotHandled().let {
+                    Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+                }
+            })
             scoreone.setOnTouchListener { v, event ->
                 mDetector.onTouchEvent(event)
                 return@setOnTouchListener true

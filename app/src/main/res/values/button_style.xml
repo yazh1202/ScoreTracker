@@ -2,7 +2,5 @@
 <resources>
     <style name="ButtonStyle" parent="TextAppearance.AppCompat.Button">
         <item name="android:radius">8dp</item>
-        <item name="android:background">@drawable/button_bg</item>
-        <item name="background">@drawable/button_bg</item>
     </style>
 </resources>

@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 
 class HomeViewModel : ViewModel() {
 
@@ -14,9 +15,9 @@ class HomeViewModel : ViewModel() {
     val scoretwo: LiveData<String> = _scoretwo
     private val _playerOneName = MutableLiveData("Yash")
     val playerOneName: LiveData<String> = _playerOneName
-    private val _playerTwoName = MutableLiveData("Yash")
+    private val _playerTwoName = MutableLiveData("Sam")
     val playerTwoName: LiveData<String> = _playerTwoName
-    private val _MaxScore = MutableLiveData(2)
+    private val _MaxScore = MutableLiveData(21)
     val MaxScore: LiveData<Int> = _MaxScore
     private val statusMessage = MutableLiveData<Event<String>>()
 
@@ -25,12 +26,13 @@ class HomeViewModel : ViewModel() {
 
     fun scoreoneInc() {
         var temp = scoreone.value?.toInt()
-        if(temp!!.equals(MaxScore.value)){
+        if (temp!! == MaxScore.value) {
+            statusMessage.value = Event("${playerOneName.value.toString()} Has Won ")
+            resetScores()
             return
         }
         temp = temp.plus(1)
         _scoreone.value = temp.toString()
-
 
     }
 
@@ -45,7 +47,9 @@ class HomeViewModel : ViewModel() {
 
     fun scoretwoInc() {
         var temp = scoretwo.value?.toInt()
-        if(temp!!.equals(MaxScore.value)){
+        if (temp!!.equals(MaxScore.value)) {
+            statusMessage.value = Event("${playerTwoName.value.toString()} Has Won ")
+            resetScores()
             return
         }
         temp = temp.plus(1)
@@ -65,7 +69,6 @@ class HomeViewModel : ViewModel() {
     fun resetScores() {
         _scoretwo.value = "0"
         _scoreone.value = "0"
-        Log.d("HOMEVIEWMODEL", scoreone.value + scoretwo.value)
     }
 
     fun saveNames(name1: String, name2: String) {

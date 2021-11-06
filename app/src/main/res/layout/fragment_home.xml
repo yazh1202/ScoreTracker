@@ -2,19 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
     <data>
 
         <variable
             name="hViewModel"
             type="com.yash.scoreTracker.ui.home.HomeViewModel" />
-
-        <variable
-            name="vm"
-            type="com.yash.scoreTracker.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
@@ -36,14 +32,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{@string/playerName(hViewModel.scoreone,vm.playerOneName)}"
+                android:text="@{@string/playerName(hViewModel.scoreone,hViewModel.playerOneName)}"
                 android:textSize="96sp"
                 tools:text="1" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
-                android:background="@android:color/white" />
+                android:background="?attr/colorOnSecondary"/>
 
             <TextView
                 android:id="@+id/scoretwo"
@@ -51,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@{@string/playerName(hViewModel.scoretwo,vm.playerTwoName)}"
+                android:text="@{@string/playerName(hViewModel.scoretwo,hViewModel.playerTwoName)}"
                 android:textSize="96sp"
                 tools:text="2" />
 
@@ -59,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@{@string/maxScore(vm.MaxScore.toString())}"
+                android:text="@{@string/maxScore(hViewModel.MaxScore.toString())}"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 tools:text="Something that works"/>

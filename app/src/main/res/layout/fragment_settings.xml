@@ -40,9 +40,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
+                    android:autoSizeTextType="uniform"
                     android:text="@string/EnterPlayerOne"
-                    android:textSize="24sp"
-                    android:autoSizeTextType="uniform" />
+                    android:textSize="24sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -53,15 +53,19 @@
                         android:id="@+id/nameone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="8dp"
+                        android:layout_marginTop="40dp"
                         android:layout_marginEnd="8dp"
-                        android:hint="@string/name1" />
+                        android:hint="@string/name1"
+                        android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.card.MaterialCardView>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@color/design_default_color_primary"/>
+                android:layout_height="2dp"
+                android:background="@color/design_default_color_primary" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -72,34 +76,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:autoSizeTextType="uniform"
                     android:text="@string/entermax"
-                    android:textSize="24sp"
-                    android:autoSizeTextType="uniform"/>
+                    android:textSize="24sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:gravity="center">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/MaxScore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
-                        android:hint="@string/maxScoreHint" />
+                        android:hint="@string/maxScoreHint"
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.card.MaterialCardView>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@color/design_default_color_primary"/>
+                android:layout_height="2dp"
+                android:background="@color/design_default_color_primary" />
 
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight=".9">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -107,8 +115,8 @@
                     android:layout_gravity="top"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
-                    android:text="@string/EnterPlayerOne"
                     android:autoSizeTextType="uniform"
+                    android:text="@string/EnterPlayerOne"
                     android:textSize="24sp" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -121,8 +129,10 @@
                         android:id="@+id/nametwo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp" />
+                        android:layout_marginEnd="8dp"
+                        android:inputType="text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.card.MaterialCardView>

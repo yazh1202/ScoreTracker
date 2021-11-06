@@ -1,11 +1,14 @@
 package com.yash.scoreTracker.ui.settings
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -17,6 +20,10 @@ import androidx.navigation.fragment.findNavController
 import com.yash.scoreTracker.R
 import com.yash.scoreTracker.databinding.FragmentSettingsBinding
 import com.yash.scoreTracker.ui.home.HomeViewModel
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
 
 class SettingsFragment : Fragment() {
 
@@ -42,8 +49,10 @@ class SettingsFragment : Fragment() {
                   Toast.makeText(requireContext(),"Saved",Toast.LENGTH_SHORT).show()
                    val navController =  this@SettingsFragment.findNavController()
                     navController.navigate(R.id.action_nav_settings_to_nav_home)
+                    val i = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    i.hideSoftInputFromWindow(it.windowToken,0)
                 } else {
-                   Toast.makeText(requireContext(),"This is Empty",Toast.LENGTH_SHORT).show()
+                   Toast.makeText(requireContext(),"Empty Values not allowed",Toast.LENGTH_SHORT).show()
                 }
             }
         }
