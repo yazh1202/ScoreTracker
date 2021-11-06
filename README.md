@@ -9,4 +9,3 @@ Screenshots:-
 ![photo_2021-11-06_18-37-17](https://user-images.githubusercontent.com/84903954/140610714-b3bc21ec-ec54-4dbc-a329-2270db919292.jpg)
 
 ![photo_2021-11-06_18-37-20](https://user-images.githubusercontent.com/84903954/140610901-d3498f90-5241-4804-b17c-dc840467d7de.jpg)
-![photo_2021-11-06_18-37-20](https://user-images.githubusercontent.com/84903954/140610905-8beb158a-6c7e-4419-bde0-1b3cf40eaaf1.jpg)
