@@ -1,6 +1,7 @@
 package com.yash.scoreTracker.ui.home
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -11,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.Snackbar
 import com.yash.scoreTracker.databinding.FragmentHomeBinding
 
 private val DEBUG_TAG = "HOMEFRAGMENT"
@@ -45,7 +47,10 @@ class HomeFragment : Fragment() {
             hViewModel = homeViewModel
             homeViewModel.message.observe(viewLifecycleOwner, Observer {
                 it.getContentIfNotHandled().let {
-                    Toast.makeText(requireContext(),it,Toast.LENGTH_LONG).show()
+                 Snackbar.make(binding.root,it.toString(),Snackbar.LENGTH_LONG).setAction("Reset",View.OnClickListener {
+                     vm2.resetScores()
+                     Snackbar.make(binding.root,"Scores Reset",Snackbar.LENGTH_SHORT).show()
+                 }).setActionTextColor(Color.RED).show()
                 }
             })
             scoreone.setOnTouchListener { v, event ->

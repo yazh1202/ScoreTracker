@@ -11,7 +11,7 @@ class HomeViewModel : ViewModel() {
 
     private val _scoreone = MutableLiveData("0")
     val scoreone: LiveData<String> = _scoreone
-    private val _scoretwo = MutableLiveData("1")
+    private val _scoretwo = MutableLiveData("0")
     val scoretwo: LiveData<String> = _scoretwo
     private val _playerOneName = MutableLiveData("Yash")
     val playerOneName: LiveData<String> = _playerOneName
@@ -28,7 +28,6 @@ class HomeViewModel : ViewModel() {
         var temp = scoreone.value?.toInt()
         if (temp!! == MaxScore.value) {
             statusMessage.value = Event("${playerOneName.value.toString()} Has Won ")
-            resetScores()
             return
         }
         temp = temp.plus(1)
@@ -49,7 +48,6 @@ class HomeViewModel : ViewModel() {
         var temp = scoretwo.value?.toInt()
         if (temp!!.equals(MaxScore.value)) {
             statusMessage.value = Event("${playerTwoName.value.toString()} Has Won ")
-            resetScores()
             return
         }
         temp = temp.plus(1)
@@ -61,7 +59,7 @@ class HomeViewModel : ViewModel() {
         if (temp!! < 1) {
             return
         }
-        temp = temp?.minus(1)
+        temp = temp.minus(1)
         _scoretwo.value = temp.toString()
 
     }
