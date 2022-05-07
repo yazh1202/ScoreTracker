@@ -26,4 +26,6 @@
     <string name="creator_info">Made By Yash Upadhyay</string>
     <string name= "version">Version 1.0</string>
     <string name="git_link"><a href="https://github.com/yazh1202/ScoreTracker">Github</a></string>
+    <string name="channel_name">mainchannel</string>
+    <string name="channel_description">Channel to send simple notification</string>
 </resources>

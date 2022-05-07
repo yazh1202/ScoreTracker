@@ -1,26 +1,22 @@
 package com.yash.scoreTracker
 
+import android.app.NotificationChannel
 import android.os.Bundle
-import android.view.Menu
 import androidx.activity.viewModels
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.yash.scoreTracker.databinding.ActivityMainBinding
-import com.yash.scoreTracker.ui.home.HomeViewModel
-
+import com.yash.scoreTracker.viewmodels.HomeViewModel
+private lateinit var CHANNEL_ID:NotificationChannel
 class MainActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private val homeViewModel:HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
