@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
                             vm2.resetScores()
                             Snackbar.make(binding.root, "Scores Reset", Snackbar.LENGTH_SHORT)
                                 .show()
-                        }.setActionTextColor(Color.RED).show()
+                        }.setActionTextColor(Color.BLUE).show()
                 }
             }
             scoreone.setOnTouchListener {_, event ->
@@ -89,7 +89,6 @@ class HomeFragment : Fragment() {
             if (e != null) {
                 Log.d(DTAG, "Single Press Occurred at ${e.x}  ${e.y}")
                 homeViewModel.scoreoneInc()
-
             }
             return true
         }

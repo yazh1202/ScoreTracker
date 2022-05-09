@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
         <variable
@@ -10,7 +11,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
@@ -31,34 +31,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:autoSizeMaxTextSize="96sp"
+                android:autoSizeMinTextSize="24sp"
+                android:autoSizeTextType="uniform"
+                android:background="#DA3636"
                 android:gravity="center"
-                android:text="@{@string/playerName(hViewModel.scoreone,hViewModel.playerOneName)}"
-                android:textSize="96sp"
+                android:text="@{@string/playerName(hViewModel.playerOne.name,hViewModel.playerOne.cscore)}"
+                android:textColor="@color/black"
                 tools:text="1" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="?attr/colorOnSecondary"/>
-
-            <TextView
-                android:id="@+id/scoretwo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@{@string/playerName(hViewModel.scoretwo,hViewModel.playerTwoName)}"
-                android:textSize="96sp"
-                tools:text="2" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:background="#87CEEB"
                 android:text="@{@string/maxScore(hViewModel.MaxScore.toString())}"
                 android:textAlignment="center"
+                android:textColor="#1B5E20"
                 android:textSize="18sp"
-                tools:text="Something that works"/>
+                tools:text="Something that works" />
+
+            <TextView
+                android:id="@+id/scoretwo"
+                android:autoSizeMaxTextSize="96sp"
+                android:autoSizeMinTextSize="24sp"
+                android:autoSizeTextType="uniform"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#87CEEB"
+                android:gravity="center"
+                android:text="@{@string/playerName(hViewModel.playerTwo.name,hViewModel.playerTwo.cscore)}"
+                android:textColor="#546E7A"
+                tools:text="2" />
 
 
         </LinearLayout>

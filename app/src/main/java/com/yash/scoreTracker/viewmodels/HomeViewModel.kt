@@ -4,84 +4,89 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.yash.scoreTracker.models.Action
+import com.yash.scoreTracker.models.Player
+import com.yash.scoreTracker.models.PlayerID
 import com.yash.scoreTracker.ui.home.Event
 
 class HomeViewModel : ViewModel() {
-    private val adv = "AD"
-    private val _scoreone = MutableLiveData("0")
-    val scoreone: LiveData<String> = _scoreone
-    private val _scoretwo = MutableLiveData("0")
-    val scoretwo: LiveData<String> = _scoretwo
-    private val _playerOneName = MutableLiveData("Yash")
-    val playerOneName: LiveData<String> = _playerOneName
-    private val _playerTwoName = MutableLiveData("Sam")
-    val playerTwoName: LiveData<String> = _playerTwoName
+    val playerOne: MutableLiveData<Player> =
+        MutableLiveData<Player>(Player(playerID = PlayerID.ONE, "Yash"))
+    val playerTwo: MutableLiveData<Player> =
+        MutableLiveData<Player>(Player(playerID = PlayerID.TWO, "Ash"))
     private val _MaxScore = MutableLiveData(2)
     val MaxScore: LiveData<Int> = _MaxScore
     private val statusMessage = MutableLiveData<Event<String>>()
     val message: LiveData<Event<String>>
         get() = statusMessage
     var tied = MutableLiveData<Boolean>(false)
-
-    //Function to handle score increases
     private fun scoreChange(playerID: PlayerID, action: Action) {
-        val currPlayer = when (playerID) {
-            PlayerID.ONE -> _scoreone
-            PlayerID.TWO -> _scoretwo
+        val currentPlayer = when (playerID) {
+            PlayerID.ONE -> playerOne
+            PlayerID.TWO -> playerTwo
+        }
+        val score = when (action) {
+            Action.INC -> {
+                currentPlayer.value?.score?.plus(1)!!
+            }
+            Action.DEC -> {
+                currentPlayer.value?.score?.minus(1)!!
+            }
         }
         if (tied.value!!) {
-            advantagePlay(playerID)
+            advantagePlay(currentPlayer, action)
+            currentPlayer.value?.score = score
             return
         }
-        var temp = currPlayer.value!!.toInt()
-        temp = when (action) {
-            Action.INC ->
-                if (temp != MaxScore.value!!) {
-                    temp + 1
-                } else {
-                    temp
-                }
-            Action.DEC -> temp - 1
-        }
-
-        if (hasWon(temp)) {
-            showMessage(playerID = playerID)
-        }
-        showChanges(playerID, temp)
-        checkTie(playerID)
-    }
-
-    private fun advantagePlay(playerID: PlayerID) {
-        val currPlayer = when (playerID) {
-            PlayerID.ONE -> _scoreone
-            PlayerID.TWO -> _scoretwo
-        }
-        if (currPlayer.value.equals(adv)) {
-            currPlayer.value = "WON"
-            showMessage(playerID)
+        if (score <= MaxScore.value!! && score >= 0) {
+            currentPlayer.value?.score = score
+            Log.d("HVIEWMODEL", currentPlayer.value?.score.toString())
+            showChanges(currentPlayer, score)
+            if (hasWon(score)) {
+                showMessage(player = currentPlayer.value!!)
+            }
+            checkTie(currentPlayer)
         } else {
-            currPlayer.value = adv
+            showMessage(player = currentPlayer.value!!)
         }
     }
 
-    private fun showMessage(playerID: PlayerID) {
-        val name = when (playerID) {
-            PlayerID.ONE -> {
-                playerOneName.value
+    private fun advantagePlay(player: MutableLiveData<Player>, action: Action) {
+        val otherPlayer = when (player.value?.playerID) {
+            PlayerID.ONE -> playerTwo
+            PlayerID.TWO -> playerOne
+            else -> null
+        }
+        when (action) {
+            Action.DEC -> {
+                player.value?.cscore?.value = player.value?.score.toString()
             }
-            PlayerID.TWO -> {
-                playerTwoName.value
+            Action.INC -> {
+                if (player.value?.cscore?.value == "AD") {
+                    showMessage(player.value!!)
+                    player.value?.score = player.value?.score?.plus(1)!!
+                    showChanges(player, player.value?.score!!)
+                } else {
+                    player.value?.score = player.value?.score?.plus(1)!!
+                    if (otherPlayer?.value?.score == player.value?.score?.minus(1)) {
+                        player.value?.cscore?.value = "AD"
+                    } else {
+                        if (otherPlayer != null) {
+                            otherPlayer.value?.score?.let { showChanges(otherPlayer, it) }
+                        }
+                        showChanges(player, player.value?.score!!)
+                    }
+                }
             }
         }
-        statusMessage.value = Event("$name Has Won")
     }
 
-    private fun showChanges(playerID: PlayerID, temp: Int) {
-        val currPlayer = when (playerID) {
-            PlayerID.ONE -> _scoreone
-            PlayerID.TWO -> _scoretwo
-        }
-        currPlayer.value = temp.toString()
+    private fun showMessage(player: Player) {
+        statusMessage.value = Event("${player.name} Has Won")
+    }
+
+    private fun showChanges(player: MutableLiveData<Player>, score: Int) {
+        player.value?.cscore?.postValue(score.toString())
     }
 
     fun scoreoneInc() {
@@ -98,53 +103,38 @@ class HomeViewModel : ViewModel() {
 
     fun scoretwoDec() {
         scoreChange(playerID = PlayerID.TWO, Action.DEC)
-
     }
 
     fun resetScores() {
-        _scoretwo.value = "0"
-        _scoreone.value = "0"
+        playerOne.value?.score = 0
+        playerTwo.value?.score = 0
+        playerOne.value?.cscore?.value = "0"
+        playerTwo.value?.cscore?.value = "0"
+        tied.value = false
     }
 
     fun saveNames(name1: String, name2: String) {
-        _playerOneName.value = name1
-        _playerTwoName.value = name2
+        playerOne.value?.name = name1
+        playerTwo.value?.name = name2
     }
 
     fun setMaxScore(MaxScore: Int) {
         _MaxScore.value = MaxScore
     }
 
-    //Function to check if the game is tied or not
-    fun checkTie(playerID: PlayerID) {
-        //Checking if the game is tied or not
-        val currPlayer: MutableLiveData<String?> = when (playerID) {
-            PlayerID.ONE -> _scoreone
-            PlayerID.TWO -> _scoretwo
+    fun checkTie(currentPlayer: MutableLiveData<Player>) {
+        val otherPlayer = when (currentPlayer.value?.playerID) {
+            PlayerID.ONE -> playerTwo
+            PlayerID.TWO -> playerOne
+            else -> {
+                null
+            }
         }
-        val otherPlayer: MutableLiveData<String?> = if (playerID == PlayerID.ONE) {
-            _scoretwo
-        } else {
-            _scoreone
-        }
-        val s1 = currPlayer.value?.toInt()
-        val s2 = otherPlayer.value?.toInt()
-        val max = MaxScore.value
-        if ((s1 == (max!! - 1) || s2 == (max - 1)) && s1 == s2) {
-            tied.value = true
-        }
+        val s1 = currentPlayer.value?.score
+        val s2 = otherPlayer?.value?.score
+        tied.value = s1 == s2 && (s1 == MaxScore.value?.minus(1) || s2 == MaxScore.value?.minus(1))
     }
 
     //Function to check if the player has won or not
     fun hasWon(score: Int): Boolean = score == MaxScore.value
-}
-
-//Marking Player ID's for clarity
-enum class PlayerID {
-    ONE, TWO
-}
-
-//Marking Actions to scores
-enum class Action {
-    INC, DEC
 }
