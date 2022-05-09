@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="?attr/textFillColor"
-            android:background="?attr/colorPrimary"
+            android:background="@drawable/toolbar_border"
             app:popupTheme="@style/Theme.ScoreTracker.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
